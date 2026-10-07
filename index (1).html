@@ -1,0 +1,267 @@
+```html
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-[#09090b] text-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rafsan Ahmed - Video Stream</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: #09090b;
+        }
+        .pulse-ring {
+            animation: pulse-border 2s infinite;
+        }
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+    </style>
+</head>
+<body class="min-h-full flex flex-col justify-center items-center p-3 sm:p-6 antialiased selection:bg-blue-500/20 selection:text-blue-200">
+
+    <main class="w-full max-w-md mx-auto flex flex-col items-center">
+        
+        <!-- Video Card Container -->
+        <div class="w-full bg-[#121215] rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col">
+            
+            <!-- Video Player Section -->
+            <div class="relative w-full aspect-[9/16] bg-black group overflow-hidden select-none">
+                
+                <!-- Live Video Stream -->
+                <video 
+                    id="videoElement" 
+                    class="w-full h-full object-cover cursor-pointer" 
+                    loop 
+                    playsinline
+                    crossorigin="anonymous">
+                    <!-- Reliable CDN Video Stream -->
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-chart-bars-showing-financial-data-40898-large.mp4" type="video/mp4">
+                    Your browser does not support video playback.
+                </video>
+
+                <!-- Center Play/Pause Control Overlay -->
+                <button 
+                    id="playOverlayBtn" 
+                    aria-label="Play or Pause Video"
+                    class="absolute inset-0 w-full h-full flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors cursor-pointer z-10">
+                    <div id="playIconBg" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center text-white shadow-2xl transform transition-all duration-300 group-hover:scale-105 active:scale-95">
+                        <i data-lucide="play" id="mainPlayIcon" class="w-8 h-8 sm:w-10 sm:h-10 ml-1 fill-white stroke-none"></i>
+                    </div>
+                </button>
+
+                <!-- Top Gradient & Badges Overlay -->
+                <div class="absolute top-0 inset-x-0 p-4 bg-gradient-to-b from-black/80 via-black/40 to-transparent flex items-center justify-between z-20 pointer-events-none">
+                    <div class="flex items-center space-x-2 pointer-events-auto">
+                        <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-white bg-red-600/90 backdrop-blur-md px-2.5 py-1 rounded-full border border-red-500/30 shadow-sm pulse-ring">
+                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
+                            LIVE
+                        </span>
+                        <span class="text-[11px] font-medium text-slate-300 bg-white/10 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
+                            18/04/2026
+                        </span>
+                    </div>
+
+                    <!-- Audio Control Button -->
+                    <button 
+                        id="muteToggleBtn" 
+                        aria-label="Mute or Unmute Audio" 
+                        class="pointer-events-auto p-2.5 rounded-full bg-black/50 backdrop-blur-md text-white/90 hover:text-white border border-white/15 hover:bg-black/70 transition-all active:scale-90">
+                        <i data-lucide="volume-x" id="muteIcon" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Bottom Controls & Timeline -->
+                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-3 pt-6 z-20 flex flex-col gap-2">
+                    <!-- Progress Bar Track -->
+                    <div id="progressContainer" class="w-full h-1.5 bg-white/20 hover:h-2.5 rounded-full cursor-pointer transition-all flex items-center">
+                        <div id="progressBar" class="h-full bg-blue-500 rounded-full w-0 relative">
+                            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow scale-0 group-hover:scale-100 transition-transform"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="p-5 sm:p-6 bg-[#121215] space-y-4 border-t border-white/5">
+                
+                <!-- Author Info Header -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="relative w-11 h-11 rounded-full p-[2px] bg-gradient-to-tr from-blue-500 to-indigo-500">
+                            <div class="w-full h-full rounded-full overflow-hidden bg-slate-800">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Rafsan Ahmed Profile" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="flex items-center space-x-1.5">
+                                <span class="font-bold text-base text-white tracking-wide">Rafsan Ahmed</span>
+                                <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-blue-500 text-white" title="Verified Creator">
+                                    <i data-lucide="check" class="w-2.5 h-2.5 stroke-[3]"></i>
+                                </span>
+                            </div>
+                            <span class="text-xs text-slate-400">Posted on 18/04/2026</span>
+                        </div>
+                    </div>
+
+                    <!-- Follow Button -->
+                    <button id="followBtn" class="px-4 py-1.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold tracking-wide transition-all active:scale-95 shadow-lg shadow-blue-600/20">
+                        Follow
+                    </button>
+                </div>
+
+                <!-- Title & Captions -->
+                <div class="space-y-2 pt-1">
+                    <h1 class="text-base font-semibold text-slate-100 leading-relaxed">
+                        We deserve money 🔥
+                    </h1>
+                    <div class="flex flex-wrap gap-1.5 text-xs font-medium text-blue-400">
+                        <span class="hover:text-blue-300 transition-colors cursor-pointer">#tradingstrategy</span>
+                        <span class="hover:text-blue-300 transition-colors cursor-pointer">#trading</span>
+                        <span class="hover:text-blue-300 transition-colors cursor-pointer">#bestsignalsgroupquotex</span>
+                        <span class="hover:text-blue-300 transition-colors cursor-pointer">#beginners</span>
+                        <span class="hover:text-blue-300 transition-colors cursor-pointer">#trader</span>
+                    </div>
+                </div>
+
+                <!-- Engagement Bar -->
+                <div class="flex items-center justify-between pt-2 border-t border-white/5 text-slate-400 text-xs">
+                    <button id="likeBtn" class="flex items-center space-x-1.5 hover:text-red-400 transition-colors">
+                        <i data-lucide="heart" id="heartIcon" class="w-4 h-4"></i>
+                        <span id="likeCount">12.4k</span>
+                    </button>
+                    <button class="flex items-center space-x-1.5 hover:text-blue-400 transition-colors">
+                        <i data-lucide="message-square" class="w-4 h-4"></i>
+                        <span>842</span>
+                    </button>
+                    <button id="shareBtn" class="flex items-center space-x-1.5 hover:text-green-400 transition-colors">
+                        <i data-lucide="share-2" class="w-4 h-4"></i>
+                        <span id="shareText">Share</span>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize Lucide Icons
+            lucide.createIcons();
+
+            const video = document.getElementById('videoElement');
+            const playOverlayBtn = document.getElementById('playOverlayBtn');
+            const mainPlayIcon = document.getElementById('mainPlayIcon');
+            const playIconBg = document.getElementById('playIconBg');
+            const muteToggleBtn = document.getElementById('muteToggleBtn');
+            const muteIcon = document.getElementById('muteIcon');
+            const progressContainer = document.getElementById('progressContainer');
+            const progressBar = document.getElementById('progressBar');
+            const followBtn = document.getElementById('followBtn');
+            const likeBtn = document.getElementById('likeBtn');
+            const heartIcon = document.getElementById('heartIcon');
+            const likeCount = document.getElementById('likeCount');
+            const shareBtn = document.getElementById('shareBtn');
+            const shareText = document.getElementById('shareText');
+
+            let isLiked = false;
+            let likes = 12400;
+
+            // Muted by default for auto-play browser compliance
+            video.muted = true;
+
+            // Play / Pause video logic
+            function togglePlay() {
+                if (video.paused) {
+                    video.play().then(() => {
+                        playIconBg.classList.add('opacity-0', 'scale-75');
+                        mainPlayIcon.setAttribute('data-lucide', 'pause');
+                        lucide.createIcons();
+                    }).catch(err => {
+                        console.log("Autoplay prevented or video play error:", err);
+                    });
+                } else {
+                    video.pause();
+                    playIconBg.classList.remove('opacity-0', 'scale-75');
+                    mainPlayIcon.setAttribute('data-lucide', 'play');
+                    lucide.createIcons();
+                }
+            }
+
+            playOverlayBtn.addEventListener('click', togglePlay);
+
+            // Timeline update
+            video.addEventListener('timeupdate', () => {
+                if (video.duration) {
+                    const progressPercent = (video.currentTime / video.duration) * 100;
+                    progressBar.style.width = `${progressPercent}%`;
+                }
+            });
+
+            // Timeline click seek
+            progressContainer.addEventListener('click', (e) => {
+                const rect = progressContainer.getBoundingClientRect();
+                const clickPosition = (e.clientX - rect.left) / rect.width;
+                video.currentTime = clickPosition * video.duration;
+            });
+
+            // Mute / Unmute audio
+            muteToggleBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                video.muted = !video.muted;
+                muteIcon.setAttribute('data-lucide', video.muted ? 'volume-x' : 'volume-2');
+                lucide.createIcons();
+            });
+
+            // Reset interface when video ends
+            video.addEventListener('ended', () => {
+                playIconBg.classList.remove('opacity-0', 'scale-75');
+                mainPlayIcon.setAttribute('data-lucide', 'play');
+                lucide.createIcons();
+            });
+
+            // Interactive UI Actions
+            followBtn.addEventListener('click', () => {
+                if (followBtn.innerText === 'Follow') {
+                    followBtn.innerText = 'Following';
+                    followBtn.classList.replace('bg-blue-600', 'bg-white/10');
+                    followBtn.classList.add('text-slate-300');
+                } else {
+                    followBtn.innerText = 'Follow';
+                    followBtn.classList.replace('bg-white/10', 'bg-blue-600');
+                    followBtn.classList.remove('text-slate-300');
+                }
+            });
+
+            likeBtn.addEventListener('click', () => {
+                isLiked = !isLiked;
+                likes += isLiked ? 1 : -1;
+                likeCount.innerText = (likes / 1000).toFixed(1) + 'k';
+                if (isLiked) {
+                    heartIcon.classList.add('text-red-500', 'fill-red-500');
+                } else {
+                    heartIcon.classList.remove('text-red-500', 'fill-red-500');
+                }
+            });
+
+            shareBtn.addEventListener('click', () => {
+                shareText.innerText = 'Copied!';
+                setTimeout(() => {
+                    shareText.innerText = 'Share';
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
+```
